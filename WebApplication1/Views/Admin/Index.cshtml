@@ -1,0 +1,33 @@
+﻿@model IEnumerable<WebApplication1.Models.Category>
+
+<h2>Admin Paneli</h2>
+
+<h3>Sınav Kategorileri</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Kategori Adı</th>
+           
+            <th>Düzenle</th>
+            <th>Sil</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td><a href="@Url.Action("ListByCategory", "Exam", new { categoryId = category.CategoryId })">@category.Name</a></td>
+             
+                <td>
+                    <a class="btn btn-warning" href="@Url.Action("Edit", "Category", new { id = category.CategoryId })">Düzenle</a>
+                </td>
+                <td>
+                    <form asp-action="Delete" asp-controller="Category" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@category.CategoryId" />
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Bu kategoriyi silmek istediğinize emin misiniz?');">Sil</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

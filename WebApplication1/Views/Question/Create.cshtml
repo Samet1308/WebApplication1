@@ -1,0 +1,53 @@
+﻿@model WebApplication1.Models.QuestionViewModel
+
+@{
+    ViewData["Title"] = "Soru Oluştur";
+}
+
+<h2>Soru Oluştur</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Text" class="control-label">Soru Metni</label>
+        <textarea asp-for="Text" class="form-control"></textarea>
+        <span asp-validation-for="Text" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Şıklar</label>
+     @*    @for (int i = 0; i < Model.OptionTexts.Count; i++)
+        {
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" name="OptionTexts[@i]" placeholder="Şık @i" />
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <input type="radio" name="CorrectOptionIndex" value="@i" /> Doğru Cevap
+                    </div>
+                </div>
+            </div>
+        } *@
+        <button type="button" id="addOption" class="btn btn-secondary">Şık Ekle</button>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Oluştur</button>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        document.getElementById('addOption').addEventListener('click', function () {
+            var optionCount = document.querySelectorAll('input[name^="OptionTexts"]').length;
+            var newOptionHtml = `
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="OptionTexts[${optionCount}]" placeholder="Şık ${optionCount}" />
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <input type="radio" name="CorrectOptionIndex" value="${optionCount}" /> Doğru Cevap
+                                </div>
+                            </div>
+                        </div>`;
+            document.querySelector('form .form-group:nth-child(2)').insertAdjacentHTML('beforeend', newOptionHtml);
+        });
+    </script>
+}
